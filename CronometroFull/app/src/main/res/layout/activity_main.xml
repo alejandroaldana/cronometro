@@ -24,24 +24,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <Button
             android:id="@+id/btnStart"
-            app:srcCompat="@drawable/play"
-            android:layout_width="200px"
-            android:layout_height="200px"
-            android:adjustViewBounds="false" />
+            android:text="Play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <ImageButton
+        <Button
             android:id="@+id/btnPause"
-            app:srcCompat="@drawable/pause"
-            android:layout_width="200px"
-            android:layout_height="200px"/>
+            android:text="Pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <ImageButton
+        <Button
+            android:id="@+id/btnLap"
+            android:text="Lap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
             android:id="@+id/btnRestart"
-            app:srcCompat="@drawable/replay"
-            android:layout_width="200px"
-            android:layout_height="200px"/>
+            android:text="Restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     
     <LinearLayout

@@ -7,14 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton btnStart, btnPause, btnRestart;
+    /* Definir Botones y TextView */
+    Button btnStart, btnPause, btnLap, btnRestart;
     TextView txtReloj;
+    /**/
+
     Handler customHandler = new Handler();
     LinearLayout container;
     Runnable updateTimerThread = new Runnable() {
@@ -24,9 +27,8 @@ public class MainActivity extends AppCompatActivity {
             updateTime = timeSwapBuff + timeInMilliseconds;
             int secs = (int) (updateTime/1000);
             int mins = (secs/60);
-            secs &= 60;
             int milliseconds = (int) (updateTime%1000);
-            txtReloj.setText("" + mins + ":" + String.format("%2d", secs) + ":" + String.format("%3d", milliseconds));
+            txtReloj.setText("" + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
         }
     };
@@ -40,16 +42,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnStart = (ImageButton) findViewById(R.id.btnStart);
-        btnPause = (ImageButton) findViewById(R.id.btnPause);
-        btnRestart = (ImageButton) findViewById(R.id.btnRestart);
+
+        /* Inicializar Botones y textView */
+        btnStart = (Button) findViewById(R.id.btnStart);
+        btnPause = (Button) findViewById(R.id.btnPause);
+        btnLap = (Button) findViewById(R.id.btnLap);
+        btnRestart = (Button) findViewById(R.id.btnRestart);
         txtReloj = (TextView) findViewById(R.id.reloj);
+        /**/
+
         container = (LinearLayout) findViewById(R.id.container);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /* Poner el tiempo inicial */
                 startTime = SystemClock.uptimeMillis();
+                /**/
+
                 customHandler.postDelayed(updateTimerThread, 0);
             }
         });
@@ -57,19 +68,44 @@ public class MainActivity extends AppCompatActivity {
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /* Poner el tiempo de pausa */
                 timeSwapBuff += timeInMilliseconds;
+                /**/
+
                 customHandler.removeCallbacks(updateTimerThread);
+            }
+        });
+
+        btnLap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View addView = inflater.inflate(R.layout.row, null);
+                TextView txtValue = (TextView) addView.findViewById(R.id.txtContent);
+
+                /* Poner texto */
+                txtValue.setText(txtReloj.getText());
+                /**/
+
+                container.addView(addView);
             }
         });
 
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View addView = inflater.inflate(R.layout.row, null);
-                TextView txtValue = (TextView) addView.findViewById(R.id.txtContent);
-                txtValue.setText(txtReloj.getText());
-                container.addView(addView);
+                customHandler.removeCallbacks(updateTimerThread);
+
+                /* Poner valores a cero */
+                startTime = 0L;
+                timeInMilliseconds = 0L;
+                timeSwapBuff = 0L;
+                updateTime = 0L;
+                /**/
+
+                txtReloj.setText("0:00:000");
+                container.removeAllViews();
             }
         });
     }
