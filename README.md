@@ -1,9 +1,11 @@
-ACTIVIDAD
+#ACTIVIDAD
+
 	-Interfaz
 		+TextView (id txtReloj, texto inicial 0:00:000)
 		+Tres botones (id btnStart, btnPause, btnRestart)
 		+Scrollview 
 			*con LinearLayout dentro (id container)
+			
 	-Código
 		+Definir los elementos (botones y text)
 		+Metodo setOnClickListener para cada botón
@@ -12,7 +14,8 @@ ACTIVIDAD
 		+Cuarto botón de resetear
 		+En general cualquier cosa que se les ocurra
 
-GUION
+#GUION
+
 	-Crear un dispositivo virtual
 	-Abrir un proyecto vacío
 		+Explicarles cómo colocar cosas en la interfaz (básicamente arrastrando y mediante Layouts)
