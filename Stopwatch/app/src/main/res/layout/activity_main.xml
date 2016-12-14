@@ -9,13 +9,13 @@
     tools:context="com.example.keev.cronometrofull.MainActivity">
 
     <TextView
-        android:id="@+id/reloj"
+        android:id="@+id/texView"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:textSize="40sp"
         android:textColor="#000000"
-        android:text="0:00:000"
+        android:text="Aqui va el tiempo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
@@ -24,11 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnStart"
-            android:text="Play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/btnPause"
@@ -43,8 +38,8 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btnRestart"
-            android:text="Restart"
+            android:id="@+id/btnRestartt"
+            android:text="Restartt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
