@@ -12,21 +12,23 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    /* Definir Botones y TextView */
     Button btnStart, btnPause, btnLap, btnRestart;
     TextView txtReloj;
-    /**/
 
     Handler customHandler = new Handler();
     LinearLayout container;
     Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
+            //el tiempo que ha pasado desde startTime
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            //lo sumamos al que ya teniamos
             updateTime = timeSwapBuff + timeInMilliseconds;
+            //calculamos los segundos, minutos y milisegundos
             int secs = (int) (updateTime/1000);
             int mins = (secs/60);
             int milliseconds = (int) (updateTime%1000);
+            //lo ponemos desntro del cuadro de texto
             txtReloj.setText("" + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
         }
@@ -42,22 +44,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* Inicializar Botones y textView */
-        btnStart = (Button) findViewById(R.id.btnStart);
+        /* Inicializar Boton start */
+        
+        /**/
+        
         btnPause = (Button) findViewById(R.id.btnPause);
         btnLap = (Button) findViewById(R.id.btnLap);
         btnRestart = (Button) findViewById(R.id.btnRestart);
         txtReloj = (TextView) findViewById(R.id.reloj);
-        /**/
-
         container = (LinearLayout) findViewById(R.id.container);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /* Poner el tiempo inicial */
-                startTime = SystemClock.uptimeMillis();
+                /* Poner en startTime el tiempo en este momento */
+                
                 /**/
 
                 customHandler.postDelayed(updateTimerThread, 0);
@@ -67,11 +69,7 @@ public class MainActivity extends AppCompatActivity {
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /* Poner el tiempo de pausa */
                 timeSwapBuff += timeInMilliseconds;
-                /**/
-
                 customHandler.removeCallbacks(updateTimerThread);
             }
         });
@@ -82,11 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View addView = inflater.inflate(R.layout.row, null);
                 TextView txtValue = (TextView) addView.findViewById(R.id.txtContent);
-
-                /* Poner texto */
                 txtValue.setText(txtReloj.getText());
-                /**/
-
                 container.addView(addView);
             }
         });
@@ -95,17 +89,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customHandler.removeCallbacks(updateTimerThread);
-
-                /* Poner valores a cero */
                 startTime = 0L;
                 timeInMilliseconds = 0L;
                 timeSwapBuff = 0L;
                 updateTime = 0L;
-                /**/
-
                 txtReloj.setText("0:00:000");
                 container.removeAllViews();
             }
         });
+    }
+    
+    public static long tiempoEnEsteMomento() {
+        return SystemClock.uptimeMillis();
     }
 }
